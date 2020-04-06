@@ -7,6 +7,7 @@ from profiles import views
 routers = DefaultRouter()
 routers.register('profile', views.UserProfileViewSet)
 routers.register('feed', views.UserProfileFeedViewSet)
+routers.register('message', views.MessagingViewSet)
 
 urlpatterns = [
     path('', include(routers.urls)),

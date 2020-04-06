@@ -35,3 +35,12 @@ class ProfileFeedItemSerializer(serializers.ModelSerializer):
         model = models.ProfileFeedItem
         fields = ('id', 'user_profile', 'status_text', 'created_on')
         extra_kwargs = {'user_profile': {'read_only': True}}
+
+
+class MessageSerializer(serializers.ModelSerializer):
+    """Serializes messages"""
+
+    class Meta:
+        model = models.Messaging
+        fields = ('sent_from', 'message_text', 'sent_to', 'sent_on')
+        extra_kwargs = {'sent_from': {'read_only': True}}

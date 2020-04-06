@@ -76,3 +76,26 @@ class ProfileFeedItem(models.Model):
     def __str__(self):
         """Return model as string"""
         return self.status_text
+
+class Messaging(models.Model):
+    """Message from user to user"""
+
+    sent_from = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='message_sender',
+        on_delete=models.SET_NULL,
+        null=True
+    )
+    message_text = models.TextField()
+    sent_to = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='message_receiver',
+        on_delete=models.SET_NULL,
+        null=True
+    )
+    sent_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        """Return message as string"""
+
+        return self.message_text
