@@ -8,6 +8,7 @@ routers = DefaultRouter()
 routers.register('profile', views.UserProfileViewSet, basename="profile")
 routers.register('feed', views.UserProfileFeedViewSet, basename="feed")
 routers.register('message', views.MessagingViewSet, basename="message")
+routers.register('friends', views.FriendRequestViewSet, basename="friends")
 
 urlpatterns = [
     path('', include((routers.urls, 'profiles'), namespace='api')),

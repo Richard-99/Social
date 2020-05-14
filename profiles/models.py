@@ -46,6 +46,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    friends = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
 
     objects = UserProfileManager()
 
@@ -53,7 +54,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['name']
 
     def get_full_name(self):
-        """Function to let django know what to user for full name"""
+        """Function to let django know what is user full name"""
 
         return self.name
 
@@ -99,3 +100,26 @@ class Messaging(models.Model):
         """Return message as string"""
 
         return self.message_text
+
+class FriendRequest(models.Model):
+    """Friend request from one user to another"""
+
+    to_user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='to_user',
+        on_delete=models.CASCADE
+    )
+    from_user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='from_user',
+        on_delete=models.CASCADE
+    )
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        """String representation of the request"""
+
+        return "From {}, to {}".format(
+            self.from_user.username,
+            self.to_user.username
+        )

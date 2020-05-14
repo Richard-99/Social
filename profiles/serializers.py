@@ -8,7 +8,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.UserProfile
-        fields = ('id', 'email', 'name', 'password')
+        fields = ('id', 'email', 'name', 'password', 'friends')
         extra_kwargs = {
             'password': {
                 'write_only': True,
@@ -44,3 +44,12 @@ class MessageSerializer(serializers.ModelSerializer):
         model = models.Messaging
         fields = ('sent_from', 'message_text', 'sent_to', 'sent_on')
         extra_kwargs = {'sent_from': {'read_only': True}}
+
+
+class FriendRequestSerializer(serializers.ModelSerializer):
+    """Serializes friends requests"""
+
+    class Meta:
+        model = models.FriendRequest
+        fields = ('from_user', 'to_user', 'timestamp')
+        extra_kwargs = {'from_user': {'read_only': True}}
