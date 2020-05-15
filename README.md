@@ -1,5 +1,5 @@
 # Social
-Social network want to.
+Social network using DRF.
 
 django-project
 
