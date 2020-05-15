@@ -4,7 +4,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase, APIRequestFactory
 
 from .models import UserProfile, ProfileFeedItem
-from .views import UserProfileFeedViewSet, MessagingViewSet
+from .views import UserProfileFeedViewSet, MessagingViewSet, FriendRequestViewSet
 
 class UserProfileTest(APITestCase):
 
@@ -59,6 +59,28 @@ class MessageItemTest(APITestCase):
         self.token.save()
 
     def test_status_update(self):
+
+        request = self.factory.get(self.url, HTTP_AUTHORIZATION='Token {}'.format(self.token.key))
+        request.user = self.user
+        response = self.view(request)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class FriendRequestItemTest(APITestCase):
+
+    def setUp(self):
+
+        user = UserProfile.objects.create_user(email="abc@xyz.com",
+                                                name="Test user",
+                                                password="abc123")
+        self.url = reverse('api:friends-list')
+        self.factory = APIRequestFactory()
+        self.view = FriendRequestViewSet.as_view({'get': 'list'})
+        self.user = UserProfile.objects.get(name="Test user")
+        self.token = Token.objects.create(user=self.user)
+        self.token.save()
+
+    def test_request_send(self):
 
         request = self.factory.get(self.url, HTTP_AUTHORIZATION='Token {}'.format(self.token.key))
         request.user = self.user
