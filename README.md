@@ -18,10 +18,10 @@ Run Development Server
 python manage.py runserver
 
 # Requirements
-Django-2.2
+Django-2.2.12
 
 djangorestframework
 
 Python
 
-sqlite3
+postgres
